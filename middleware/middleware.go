@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"admin-dashboard-FP/models"
-	"fmt"
 	"net/http"
 	"os"
 
@@ -12,11 +11,8 @@ import (
 
 func AuthenMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		secretKey := []byte(os.Getenv("secretKey"))
+		secretKey := []byte(os.Getenv("SecretKey"))
 		tokenString := c.GetHeader("Authorization")
-
-		fmt.Println(tokenString, "<<< token string dari get header in auth middleware")
-		fmt.Println(os.Getenv("secretKey"), "<<< secret key in auth middleware")
 
 		dataToken := &models.DataToken{}
 

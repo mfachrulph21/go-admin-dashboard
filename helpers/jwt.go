@@ -2,7 +2,6 @@ package helpers
 
 import (
 	"admin-dashboard-FP/models"
-	"fmt"
 	"os"
 	"time"
 
@@ -12,8 +11,6 @@ import (
 func GenerateJWT(userID uint, userRole string, userInput models.LoginUser) (string, error) {
 	var secretKey string = os.Getenv("SecretKey")
 	expirationTime := time.Now().Add(time.Hour * 1)
-
-	fmt.Println(secretKey, "secret key di jwt")
 
 	dataToken := &models.DataToken{
 		ID:    userID,
