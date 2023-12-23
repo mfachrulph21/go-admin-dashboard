@@ -52,7 +52,9 @@ func main() {
 			log.Fatal("Run server failed : ", err)
 		}
 	} else {
-		if err := router.Run(os.Getenv("PORT")); err != nil {
+		var portString = ":" + os.Getenv("PORT")
+
+		if err := router.Run(portString); err != nil {
 			log.Fatal("Run server failed : ", err)
 		}
 	}
