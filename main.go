@@ -5,6 +5,7 @@ import (
 	"admin-dashboard-FP/models"
 	"admin-dashboard-FP/routes"
 	"log"
+	"os"
 	"strconv"
 
 	"github.com/asaskevich/govalidator"
@@ -46,7 +47,13 @@ func main() {
 	routes.CategoryRoutes(router, db)
 	routes.TransactionRoutes(router, db)
 
-	if err := router.Run(":8080"); err != nil {
-		log.Fatal("Run server failed : ", err)
+	if os.Getenv("ENVIROMENT") == "local" {
+		if err := router.Run(":8080"); err != nil {
+			log.Fatal("Run server failed : ", err)
+		}
+	} else {
+		if err := router.Run(os.Getenv("PORT")); err != nil {
+			log.Fatal("Run server failed : ", err)
+		}
 	}
 }
