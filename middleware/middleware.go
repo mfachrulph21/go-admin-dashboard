@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"admin-dashboard-FP/models"
+	"fmt"
 	"net/http"
 	"os"
 
@@ -13,6 +14,10 @@ func AuthenMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		secretKey := []byte(os.Getenv("secretKey"))
 		tokenString := c.GetHeader("Authorization")
+
+		fmt.Println(tokenString, "<<< token string dari get header in auth middleware")
+		fmt.Println(os.Getenv("secretKey"), "<<< secret key in auth middleware")
+
 		dataToken := &models.DataToken{}
 
 		token, err := jwt.ParseWithClaims(tokenString, dataToken, func(t *jwt.Token) (interface{}, error) {
