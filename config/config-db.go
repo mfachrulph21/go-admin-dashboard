@@ -2,8 +2,17 @@ package config
 
 import (
 	"fmt"
+	"log"
 	"os"
+
+	"github.com/joho/godotenv"
 )
+
+func LoadEnv() {
+	if err := godotenv.Load(); err != nil {
+		log.Fatal("Error loading .env file")
+	}
+}
 
 type DBConfig struct {
 	Host     string
@@ -14,12 +23,22 @@ type DBConfig struct {
 }
 
 func GetDBConfig() *DBConfig {
-	return &DBConfig{
-		Host:     os.Getenv("DB_HOST"),
-		Port:     os.Getenv("DB_PORT"),
-		User:     os.Getenv("DB_USER"),
-		Password: os.Getenv("DB_PASSWORD"),
-		DBName:   os.Getenv("DB_NAME_FP"),
+	if os.Getenv("ENVIROMENT") == "local" {
+		return &DBConfig{
+			Host:     os.Getenv("DB_HOST"),
+			Port:     os.Getenv("DB_PORT"),
+			User:     os.Getenv("DB_USER"),
+			Password: os.Getenv("DB_PASSWORD"),
+			DBName:   os.Getenv("DB_NAME_FP"),
+		}
+	} else {
+		return &DBConfig{
+			Host:     os.Getenv("DB_HOST_PROD"),
+			Port:     os.Getenv("DB_PORT_PROD"),
+			User:     os.Getenv("DB_USER_PROD"),
+			Password: os.Getenv("DB_PASSWORD_PROD"),
+			DBName:   os.Getenv("DB_NAME_FP_PROD"),
+		}
 	}
 }
 

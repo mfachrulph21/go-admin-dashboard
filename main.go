@@ -14,6 +14,8 @@ import (
 )
 
 func main() {
+	config.LoadEnv()
+
 	//config db connection
 	dbConfig := config.GetDBConfig()
 	dsn := dbConfig.GetDBURL()
